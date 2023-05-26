@@ -48,4 +48,30 @@ app.post('/api/courses/', (req, res) => {
 app.get('/api/all/courses/', (req, res) => {
     res.send(courses)
 })
+
+//Update course
+app.put('/api/courses/:id', (req, res) => {
+    //check if course is available
+    const course = courses.find(c => c.id === parseInt(req.params.id))
+    if (!course) {
+        res.status(404).send('Course not found')
+        return;
+    }
+
+    //Validate course 
+    const { error, value } = schema.validate({
+      course_name: req.body.course_name,
+    });
+    // console.log(result)
+    if (error) {
+      res.status(404).send(error.details[0].message);
+      return;
+    }
+  
+    // Update course
+    course.course_name = req.body.course_name
+    res.send(course)
+
+     
+})
 app.listen(port, () => console.log(`Listening on port ${port}`))
