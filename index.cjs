@@ -1,7 +1,11 @@
+const Joi = require('joi')
 const express = require('express');
 const app = express();
 app.use(express.json());
 
+const schema = Joi.object({
+  course_name: Joi.string().min(3).max(30).required(),
+});
 
 const courses = [
     { "id": 1, "course_name": 'Software Dev' },
@@ -25,10 +29,13 @@ app.get('/api/courses/:id', (req, res) => {
 
 // Post course to 'api/courses/' end_point
 app.post('/api/courses/', (req, res) => {
-    if (!req.body.course_name || req.body.course_name.length < 3) {
-        res.status(400).send('Enter the course or the minimum character allowed is 3')
+    const {error, value } = schema.validate({ course_name: req.body.course_name});
+    // console.log(result)
+    if (error) {
+        res.status(404).send(error.details[0].message)
         return;
     }
+
     let course = {
         id: courses.length + 1,
         course_name: req.body.course_name,
@@ -38,7 +45,7 @@ app.post('/api/courses/', (req, res) => {
 })
 
 // Get all courses
-app.get('api/all/courses', (req, res) => {
+app.get('/api/all/courses/', (req, res) => {
     res.send(courses)
 })
 app.listen(port, () => console.log(`Listening on port ${port}`))
