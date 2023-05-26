@@ -29,13 +29,8 @@ app.get('/api/courses/:id', (req, res) => {
 
 // Post course to 'api/courses/' end_point
 app.post('/api/courses/', (req, res) => {
-    const {error, value } = schema.validate({ course_name: req.body.course_name});
-    // console.log(result)
-    if (error) {
-        res.status(404).send(error.details[0].message)
-        return;
-    }
-
+    // validate
+    validateCourse(res, req.body.course_name);
     let course = {
         id: courses.length + 1,
         course_name: req.body.course_name,
@@ -59,14 +54,7 @@ app.put('/api/courses/:id', (req, res) => {
     }
 
     //Validate course 
-    const { error, value } = schema.validate({
-      course_name: req.body.course_name,
-    });
-    // console.log(result)
-    if (error) {
-      res.status(404).send(error.details[0].message);
-      return;
-    }
+    validateCourse(res, req.body.course_name);
   
     // Update course
     course.course_name = req.body.course_name
@@ -74,4 +62,14 @@ app.put('/api/courses/:id', (req, res) => {
 
      
 })
+
+
+const validateCourse = (res, course) => {
+    const { error, value } = schema.validate({
+      course_name: course,
+    });
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+}
 app.listen(port, () => console.log(`Listening on port ${port}`))
