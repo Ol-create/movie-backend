@@ -11,3 +11,12 @@ const courseSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     isPublish: Boolean,
 });
+
+const Courses = mongoose.model("Courses", courseSchema);
+
+const courses = new Courses({
+  course_name: "Further Mathematics",
+  author: "Dr. Oluyemi",
+  tags: ["FrontEnd", "BackEnd"],
+  isPublish: true,
+});
