@@ -14,9 +14,16 @@ const courseSchema = new mongoose.Schema({
 
 const Courses = mongoose.model("Courses", courseSchema);
 
-const courses = new Courses({
-  course_name: "Further Mathematics",
-  author: "Dr. Oluyemi",
-  tags: ["FrontEnd", "BackEnd"],
-  isPublish: true,
-});
+const createCourse = async function () {
+    const course = new Courses({
+        course_name: "Further Mathematics",
+        author: "Dr. Oluyemi",
+        tags: ["FrontEnd", "BackEnd"],
+        isPublish: true,
+    });
+    const result = await course.save()
+    console.log(result)
+};
+
+createCourse();
+
