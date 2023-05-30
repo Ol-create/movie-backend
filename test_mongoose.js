@@ -25,13 +25,23 @@ const createCourse = async function () {
     console.log(result)
 };
 
-// createCourse();
+//createCourse
 
-async function getCourse() {
+// Get all Courses;
+
+async function getCourses() {
     const result = await Courses.find()
     console.log(result)
 }
 
-getCourse();
+// getCourses();
+
+// Get a specific course
+async function getCourse() {
+    const course = await Courses.find({
+        course_name: 'React'
+    })
+    console.log
+}
 
 
