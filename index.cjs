@@ -72,4 +72,20 @@ const validateCourse = (res, course) => {
       return res.status(400).send(error.details[0].message);
     }
 }
+
+//Delete course
+app.delete('/api/courses/:id', (req, res) => {
+    let course = courses.find((c) => c.id === parseInt(req.params.id));
+
+    if (!course) {
+         res
+            .status(404)
+            .send(`Course with the given ID ${req.params.id} not found`);
+         res.send(course);
+        return;
+    }
+    courses.splice(req.params.id, 1)
+    res.send(course)
+}) 
+
 app.listen(port, () => console.log(`Listening on port ${port}`))
