@@ -14,7 +14,7 @@ const courses = [
 ]
 const port = process.env.PORT || 3000
 
-//love
+//love learning, my hobby
 
 app.get('/', (req, res) => {
     res.send('Hello buddy!')
