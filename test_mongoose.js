@@ -17,17 +17,17 @@ const Courses = mongoose.model("Courses", courseSchema);
 
 const createCourse = async function () {
     const course = new Courses({
-        course_name: "English",
-        author: "Dr. Olurant",
-        tags: "lang",
-        price: 15,
-        isPublish: false,
+        course_name: "Biology",
+        author: "Mrs. Faleye",
+        tags: "science",
+        price: 20,
+        isPublish: true,
     });
     const result = await course.save()
     console.log(result)
 };
 
-createCourse()
+// createCourse()
 
 // Get all Courses;
 
@@ -40,13 +40,15 @@ async function getCourses() {
 
 // Get a specific course
 async function getCourse() {
-    const course = await Courses.find({
-        course_name: 'React'
-    })
+    const course = await Courses.find({ author: /.*Dr.*/ })
+        .sort({date: -1})
+        .limit(3)
+    
+    
     console.log(course)
 }
 
-// getCourse();
+getCourse();
 
 //More query sample
 async function getCourses() {
