@@ -17,10 +17,10 @@ const Courses = mongoose.model("Courses", courseSchema);
 
 const createCourse = async function () {
     const course = new Courses({
-        course_name: "Probability",
+        course_name: "English",
         author: "Dr. Olurant",
-        tags: "math",
-        price: 10,
+        tags: "lang",
+        price: 15,
         isPublish: false,
     });
     const result = await course.save()
