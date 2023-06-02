@@ -10,22 +10,24 @@ const courseSchema = new mongoose.Schema({
     tags: [String],
     date: { type: Date, default: Date.now },
     isPublish: Boolean,
+    price: Number,
 });
 
 const Courses = mongoose.model("Courses", courseSchema);
 
 const createCourse = async function () {
     const course = new Courses({
-        course_name: "TypeScript",
-        author: "Dr. Oluyemi",
-        tags: ["FrontEnd", "BackEnd"],
+        course_name: "Probability",
+        author: "Dr. Olurant",
+        tags: "math",
+        price: 10,
         isPublish: false,
     });
     const result = await course.save()
     console.log(result)
 };
 
-//createCourse
+createCourse()
 
 // Get all Courses;
 
@@ -41,7 +43,21 @@ async function getCourse() {
     const course = await Courses.find({
         course_name: 'React'
     })
-    console.log
+    console.log(course)
 }
 
+// getCourse();
+
+//More query sample
+async function getCourses() {
+    const courses = await Courses.find()
+        .limit(3)
+        .sort({ course_name: 1 })
+        .select({course_name: 1, tags: 1})
+    
+    console.log(courses)
+    
+}
+
+// getCourses();
 
